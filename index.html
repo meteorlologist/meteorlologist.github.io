@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        #menu-item {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            text-align: center;
+            min-height: 1.5em; /* Reserve space to prevent resizing */
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        #day-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 5px;
+        }
+
+        #day-options {
+            display: block;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+
+        #day-options h2 {
+            color: #333;
+            font-size: 1.3em;
+            text-align: left;
+            margin-left: 5px;
+        }
+
+        #day-options ul {
+            list-style-type: disc;
+            padding-left: 30px;
+            text-align: left;
+            margin-top: 10px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>What's for Dinner?</h1>
+    <div id="menu-item">Loading today's menu...</div>
+    <button onclick="showNewOption()">Something Else</button>
+    <br><br>
+
+    <h2>Don't like what's on the menu? Try another day</h2>
+    <div id="day-buttons"></div>
+    
+    <div id="day-options"></div>
+
+    <script>
+        const menu = {
+            "Monday": ["Pasta w/ Red Sauce", "Meat loaf", "Enchiladas", "Stir fry", "Fajitas", "Cream of mushroom pork w/ egg noodles", "Chilli", "Beef stew", "Hot dogs & Hamburgers", "Dumplings/Wonton soup", "Mini burritos", "Nachos", "Meatballs"],
+            "Tuesday": ["Enchiladas", "Tacos", "Fajitas", "Coriander lime chicken", "Chilli", "Taco lentils", "Chicken tortilla soup", "Mini burritos", "Nachos"],
+            "Wednesday": ["Pasta w/ Red Sauce", "Mac & Cheese/Cheesy Pasta", "Shrimp pasta", "Pasta w/ chicken cream sauce", "Peanut butter noodles", "Pasta w/ spinach or basil pesto", "Roasted red pepper pasta"],
+            "Thursday": ["Pasta w/ Red Sauce", "Mac & Cheese/Cheesy Pasta", "Pizza bagels", "Stir fry", "Quiche", "Egg fried rice", "Puff pastry salsa pizza", "Roasted sweet potato soup", "Mini burritos", "Nachos", "Spanikopita", "Peanut butter noodles", "Roasted red pepper pasta", "Mujaddara", "Dal makhani"],
+            "Friday": ["Chicken rice bake", "Quiche", "Salmon and asparagus", "Shrimp pasta", "Tomato feta chicken bake w/ pasta", "Puff pastry salsa pizza", "Spanikopita"],
+            "Saturday": ["Chicken soup", "Chicken rice bake", "Lemon chicken", "Stir fry", "Roasted chicken and veg", "Fajitas", "Tomato feta chicken bake w/ pasta", "Coriander lime chicken", "Pasta w/ chicken cream sauce", "Chicken tortilla soup", "Pasta w/ spinach or basil pesto"],
+            "Sunday": ["Pasta w/ Red Sauce", "Chicken soup", "Mac & Cheese/Cheesy Pasta", "Meat loaf", "Chicken rice bake", "Lemon chicken", "Enchiladas", "Pizza bagels", "Tacos", "Stir fry", "Quiche", "Salmon and asparagus", "Roasted chicken and veg", "Fajitas", "Shrimp pasta", "Tomato feta chicken bake w/ pasta", "Cream of mushroom pork w/ egg noodles", "Coriander lime chicken", "Chilli", "Taco lentils", "Pasta w/ chicken cream sauce", "Beef stew", "Hot dogs & Hamburgers", "Chicken tortilla soup", "Egg fried rice", "Puff pastry salsa pizza", "Dumplings/Wonton soup", "Roasted sweet potato soup", "Mini burritos", "Nachos", "Spanikopita", "Peanut butter noodles", "Pasta w/ spinach or basil pesto", "Roasted red pepper pasta", "Meatballs", "Mujaddara", "Dal makhani"]
+        };
+
+        let today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+        
+        function getRandomOption(day) {
+            let options = menu[day];
+            return options[Math.floor(Math.random() * options.length)];
+        }
+
+        function showNewOption() {
+            document.getElementById('menu-item').textContent = getRandomOption(today);
+        }
+
+        function showDayOptions(day) {
+            let dayOptionsDiv = document.getElementById('day-options');
+            dayOptionsDiv.innerHTML = `<h2>${day}'s Menu</h2><ul>${menu[day].map(item => `<li>${item}</li>`).join('')}</ul>`;
+        }
+
+        function setupDayButtons() {
+            let dayButtonsDiv = document.getElementById('day-buttons');
+            Object.keys(menu).forEach(day => {
+                let button = document.createElement('button');
+                button.textContent = day;
+                button.onclick = () => showDayOptions(day);
+                dayButtonsDiv.appendChild(button);
+            });
+        }
+
+        // Initialize
+        document.getElementById('menu-item').textContent = getRandomOption(today);
+        setupDayButtons();
+    </script>
+
+</body>
+</html>
