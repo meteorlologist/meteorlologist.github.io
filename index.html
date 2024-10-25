@@ -122,14 +122,14 @@
 
         function showDayOptions(day) {
             let dayOptionsDiv = document.getElementById('day-options');
-            dayOptionsDiv.innerHTML = `<h2>${dayLabels}'s Menu</h2><ul>${menu[day].map(item => `<li>${item}</li>`).join('')}</ul>`;
+            dayOptionsDiv.innerHTML = `<h2>${day}'s Menu</h2><ul>${menu[day].map(item => `<li>${item}</li>`).join('')}</ul>`;
         }
 
         function setupDayButtons() {
             let dayButtonsDiv = document.getElementById('day-buttons');
             Object.keys(menu).forEach(day => {
                 let button = document.createElement('button');
-                button.textContent = day;
+                button.textContent = dayLabels[day];
                 button.onclick = () => showDayOptions(day);
                 dayButtonsDiv.appendChild(button);
             });
